@@ -1,0 +1,27 @@
+package edu.hibernate.demo;
+
+import javax.persistence.Column;
+
+public class Employee {
+
+	@Column(name="EMPNO")
+	private int empno;
+	
+	@Column(name="ENAME")
+	private String eName;
+	
+	@Column(name="")
+	private String job;
+	
+	@Column(name="MGR")
+	private String mgr;
+	
+	@Column(name="SAL")
+	private double sal;
+	
+	@Column(name="COMM")
+	private double comm;
+	
+	@Column(name="DEPTNO")
+	private int deptno;
+}

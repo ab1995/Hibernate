@@ -1,0 +1,83 @@
+package edu.hibernate.demo;
+
+
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+      Configuration configure=new Configuration();
+      configure.configure("hibernate.cfg.xml");
+      SessionFactory sessionFactory=configure.buildSessionFactory();
+      
+      insertProduct(sessionFactory);
+      //updateProduct(sessionFactory);
+      //listAllProduct(sessionFactory);
+      //deleteProduct(sessionFactory);
+      testGetVsLoad(sessionFactory);
+      sessionFactory.close();
+      
+    }
+    
+    public static void testGetVsLoad(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Product product=session.load(Product.class, 1L);
+    	session.close();
+    	product.setPrice(100);
+    	session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+    	session.save(product);
+    	tx.commit();
+    }
+    
+    
+    public static void insertProduct(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+    	Product product1=new Product("Chair", 4999.0d);
+    	session.save(product1);
+    	Product product2=new Product("Table", 7999.0d);
+    	session.save(product2);
+    	tx.commit();
+    	session.close();
+    }
+    
+    public static void updateProduct(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+    	Product product=session.load(Product.class, 1L);
+    	product.setPrice(5000);
+    	session.save(product);
+    	tx.commit();
+    	session.close();
+    }
+    
+    public static void listAllProduct(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Query query=session.createQuery("from Product");
+    	for(Product product:(List<Product>)query.list())
+    		System.out.println(product);
+    	session.close();
+    }
+    
+    public static void deleteProduct(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+/*    	Product product=session.load(Product.class, 1L);
+    	session.delete(product);
+    	tx.commit();
+    	session.close();*/
+    	
+    	Query query=session.createQuery("delete Product where id=:id");
+    	query.setParameter("id", 1L);
+    	query.executeUpdate();
+    	session.close();
+    }
+}

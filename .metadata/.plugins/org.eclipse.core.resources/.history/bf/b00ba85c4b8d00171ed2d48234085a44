@@ -1,0 +1,10 @@
+package edu.hibernate.demo;
+
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+      
+    }
+}

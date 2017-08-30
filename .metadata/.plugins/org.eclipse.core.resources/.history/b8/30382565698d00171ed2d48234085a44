@@ -1,0 +1,13 @@
+package edu.hibernate.demo;
+
+public class Employee {
+
+	private int empno;
+	private String eName;
+	private String job;
+	private String mgr;
+	private String hireDate;
+	private double sal;
+	private double comm;
+	private int deptno;
+}
