@@ -1,0 +1,40 @@
+package edu.hibernate.mapping;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+import edu.hibernate.mapping.onetoone.Employee;
+import edu.hibernate.mapping.onetoone.Profile;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	 Configuration configure=new Configuration();
+         configure.configure("hibernate.cfg.xml");
+         SessionFactory sessionFactory=configure.buildSessionFactory();
+         addEmployee(sessionFactory);
+         
+         sessionFactory.close();
+    }
+    
+    public static void addEmployee(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+    	Profile p1=new Profile("Sinhgad",10.0);
+    	Employee e1=new Employee("Tom", 50000.0, p1);
+    	session.persist(e1);
+    	tx.commit();
+    	session.close();
+    	session=sessionFactory.openSession();
+    	tx=session.beginTransaction();
+    	//e1=session.load(Employee.class, 1L);
+    	e1.setSal(1000);
+    	e1.setProfile(e1.getProfile().setExperience(1););
+    	session.update(e1);
+    	tx.commit();
+    	session.close();
+    }
+}

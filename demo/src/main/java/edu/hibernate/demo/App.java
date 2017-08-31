@@ -15,23 +15,25 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projection;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.dialect.Oracle10gDialect;
 import org.hibernate.transform.ResultTransformer;
 import org.hibernate.type.Type;
 
 public class App 
 {
-
 	public static void main( String[] args )
     {
       Configuration configure=new Configuration();
       configure.configure("hibernate.cfg.xml");
       SessionFactory sessionFactory=configure.buildSessionFactory();
       
-      insertEmployee(sessionFactory);
-      prinTotalSalary(sessionFactory);
+      //insertEmployee(sessionFactory);
+      //prinTotalSalary(sessionFactory);
       //prinAverageSalary(sessionFactory);
+      
+      
       //testSaveVsUpdate(sessionFactory);
-      //insertProduct(sessionFactory);
+      insertProduct(sessionFactory);
       //updateProduct(sessionFactory);
       //listAllProduct(sessionFactory);
       //deleteProduct(sessionFactory);

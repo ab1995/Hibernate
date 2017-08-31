@@ -1,0 +1,19 @@
+package edu.hibernate.mapping.onetomany;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+public class Stock {
+
+	@Id
+	@GeneratedValue
+	@Column(name="STOCKID")
+	private Long stockId;
+	
+	private String name;
+	
+	private Double price;
+	
+	
+}

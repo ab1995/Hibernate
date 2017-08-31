@@ -33,7 +33,7 @@ public class Product {
 	@Column(name="name")
 	private String name;
 
-	@Column(name="cost")
+	@Column(name="cost",  columnDefinition = "FLOAT(5,2)")
 	private double price;
 	
 	public Product() {

@@ -1,0 +1,5 @@
+package edu.hibernate.inheritance.singletable;
+
+public class Vehicle {
+
+}

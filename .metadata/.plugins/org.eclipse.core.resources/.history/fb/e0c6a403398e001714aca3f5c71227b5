@@ -1,0 +1,7 @@
+package edu.hibernate.inheritance.singletable;
+
+@Entity
+@DiscriminatorValue(value="bike")
+public class Bike {
+
+}

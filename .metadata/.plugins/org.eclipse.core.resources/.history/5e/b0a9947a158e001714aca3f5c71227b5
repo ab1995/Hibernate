@@ -1,0 +1,28 @@
+package edu.hibernate.mapping.onetomany;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+public class Stock {
+
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private Long id;
+	
+	@Column(name="name")
+	private String name;
+	
+	@Column(name="price")
+	private Double price;
+	
+	@ManyToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="market_id")
+	private Market market;
+	
+	
+}

@@ -1,0 +1,33 @@
+package edu.hibernate.mapping.emp;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@Entity
+@Table(name="EMPLOYEE")
+public class Employee {
+
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private Long empId;
+	
+	@Column(name="ename")
+	private String empName;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.REMOVE}, 
+			fetch=FetchType.EAGER, mappedBy = "empId")
+	private Long manager;
+	
+
+}

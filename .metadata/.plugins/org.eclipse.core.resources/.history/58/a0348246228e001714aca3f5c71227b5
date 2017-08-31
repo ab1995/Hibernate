@@ -1,0 +1,5 @@
+package edu.hibernate.mapping.emp;
+
+public class Employee {
+
+}

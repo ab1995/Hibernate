@@ -1,0 +1,63 @@
+package edu.hibernate.inheritance.singletable;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="VEHICLE")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="type", discriminatorType=DiscriminatorType.STRING)
+@DiscriminatorValue(value="vehicle")
+public class Vehicle {
+
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private Long id;
+	
+	@Column(name="owner")
+	private String owner;
+
+	public Vehicle(Long id, String owner) {
+		super();
+		this.id = id;
+		this.owner = owner;
+	}
+
+	public Vehicle(String owner) {
+		super();
+		this.owner = owner;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	@Override
+	public String toString() {
+		return "Vehicle [id=" + id + ", owner=" + owner + "]";
+	}
+	
+	
+	
+}

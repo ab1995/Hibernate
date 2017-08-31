@@ -1,0 +1,9 @@
+package edu.hibernate.mapping;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+        
+    }
+}

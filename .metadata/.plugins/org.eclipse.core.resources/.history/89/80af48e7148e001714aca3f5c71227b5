@@ -1,0 +1,5 @@
+package edu.hibernate.mapping.onetomany;
+
+public class Stock {
+
+}

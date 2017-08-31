@@ -1,0 +1,22 @@
+package edu.hibernate.mapping.emp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+
+
+
+@Entity
+@Table(name="EMPLOYEE")
+public class Employee {
+
+	
+
+}

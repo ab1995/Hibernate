@@ -1,0 +1,15 @@
+package edu.hibernate.inheritance.singletable;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
+@Entity
+@DiscriminatorValue(value="car")
+public class Car extends Vehicle{
+
+	@Column(name="type")
+	private String type;
+	
+	
+}

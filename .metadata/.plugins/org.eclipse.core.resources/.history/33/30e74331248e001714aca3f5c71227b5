@@ -1,0 +1,84 @@
+package edu.hibernate.mapping.emp;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
+@Entity
+@Table(name="EMPLOYEE")
+public class Employee {
+
+	@Id
+	@GeneratedValue
+	@Column(name="id")
+	private Long empId;
+	
+	@Column(name="ename")
+	private String empName;
+	
+	@OneToMany
+	@JoinColumn(name="manager", referencedColumnName="empId")
+	private Employee manager;
+
+	public Employee(){}
+	
+	public Employee(Long empId, String empName, Employee manager) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.manager = manager;
+	}
+	
+	public Employee(String empName, Employee manager) {
+		super();
+		this.empName = empName;
+		this.manager = manager;
+	}
+	
+	public Employee(String empName) {
+		super();
+		this.empName = empName;	
+	}
+
+	public Long getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Long empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	public Employee getManager() {
+		return manager;
+	}
+
+	public void setManager(Employee manager) {
+		this.manager = manager;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [empId=" + empId + ", empName=" + empName + ", manager=" + manager + "]";
+	}
+	
+	
+
+}

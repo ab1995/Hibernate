@@ -1,0 +1,180 @@
+package edu.hibernate.mapping;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+import edu.hibernate.mapping.emp.Employee;
+import edu.hibernate.mapping.manytomany.Course;
+import edu.hibernate.mapping.manytomany.Student;
+//import edu.hibernate.mapping.onetomany.Market;
+//import edu.hibernate.mapping.onetomany.Stock;
+//import edu.hibernate.mapping.onetoone.Employee;
+import edu.hibernate.mapping.onetoone.Profile;
+import edu.hibernate.mapping.stockmarket.Market;
+import edu.hibernate.mapping.stockmarket.Stock;
+
+public class App 
+{
+    public static void main( String[] args )
+    {
+    	 Configuration configure=new Configuration();
+         configure.configure("hibernate.cfg.xml");
+         SessionFactory sessionFactory=configure.buildSessionFactory();
+         
+         //oneToOneOperations(sessionFactory);
+         //oneToManyOperations(sessionFactory);
+         //manyToManyOperations(sessionFactory);
+         //empOperations(sessionFactory);
+         
+         sessionFactory.close();
+    }
+    
+    public static void stockMarketOperations(SessionFactory sessionFactory){
+   	 Market m1=new Market("SENSEX", "Mumbai");
+   	 Set<Stock> stocks=new HashSet<Stock>();
+   	 Stock s1=new Stock("tata power", 500.0, m1);
+   	 Stock s2=new Stock("reliance jio", 700.0, m1);
+   	 Stock s3=new Stock("tata steel", 300.0, m1);
+   	 stocks.add(s1);
+   	 stocks.add(s2);
+   	 stocks.add(s3);
+   	 m1.setStocks(stocks);   	 
+   	 
+   	 Session session=sessionFactory.openSession();
+   	 Transaction tx=session.beginTransaction();
+   	 session.persist(m1);
+   	 tx.commit();
+   	 session.close();
+   	 
+   	 session=sessionFactory.openSession();
+   	 tx=session.beginTransaction();
+   	 
+   	 m1=session.load(Market.class, 1L);
+   	 m1.setCity("PUNE");
+   	 session.update(m1);
+   	 s1=session.load(Stock.class, 2L);
+   	 session.delete(s1);
+   	 //session.delete(m1);
+   	 tx.commit();
+   	 session.close();	
+    }
+    
+   /* public static void oneToOneOperations(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+    	Transaction tx=session.beginTransaction();
+    	Profile p1=new Profile("Sinhgad",10.0);
+    	Employee e1=new Employee("Tom", 50000.0, p1);
+    	session.persist(e1);
+    	tx.commit();
+    	session.close();
+    	session=sessionFactory.openSession();
+    	tx=session.beginTransaction();
+    	//e1=session.load(Employee.class, 1L);
+    	e1.setSal(1000);
+    	p1.setExperience(1);
+    	e1.setProfile(p1);
+    	session.update(e1);
+    	session.delete(e1);
+    	tx.commit();
+    	
+    	session.close();
+    }*/
+/*    public static void oneToManyOperations(SessionFactory sessionFactory){
+
+    	 Market m1=new Market("SENSEX", "Mumbai");
+    	 Set<Stock> stocks=new HashSet<Stock>();
+    	 Stock s1=new Stock("tata power", 500.0, m1);
+    	 Stock s2=new Stock("reliance jio", 700.0, m1);
+    	 Stock s3=new Stock("tata steel", 300.0, m1);
+    	 stocks.add(s1);
+    	 stocks.add(s2);
+    	 stocks.add(s3);
+    	 m1.setStocks(stocks);   	 
+    	 
+    	 Session session=sessionFactory.openSession();
+    	 Transaction tx=session.beginTransaction();
+    	 session.persist(m1);
+    	 tx.commit();
+    	 session.close();
+    	 
+    	 session=sessionFactory.openSession();
+    	 tx=session.beginTransaction();
+    	 
+    	 m1=session.load(Market.class, 1L);
+    	 m1.setCity("PUNE");
+    	 session.update(m1);
+    	 s1=session.load(Stock.class, 2L);
+    	 session.delete(s1);
+    	 //session.delete(m1);
+    	 tx.commit();
+    	 session.close();	 
+    }*/
+    
+    public static void manyToManyOperations(SessionFactory sessionFactory){
+    	
+    	Course c1=new Course("java");
+    	Course c2=new Course("cpp");
+    	Course c3=new Course("c");
+    	Set<Course> courses1=new HashSet<Course>();
+    	Set<Course> courses2=new HashSet<Course>();
+    	courses1.add(c1);
+    	courses1.add(c2);
+
+    	courses2.add(c2);
+    	courses2.add(c3);
+    	
+    	Student s1=new Student("Tom", courses1);
+    	Student s2=new Student("Clark", courses2);
+    	Session session=sessionFactory.openSession();
+   	 	Transaction tx=session.beginTransaction();
+    	
+    	session.persist(s1);
+    	session.persist(s2);
+    	
+    	tx.commit();
+    	session.close();
+    	
+    	session=sessionFactory.openSession();
+   	 	tx=session.beginTransaction();
+    	
+    	Course c=session.load(Course.class, 2L);
+    	session.delete(c);
+
+    	tx.commit();
+    	session.close();
+    }
+    
+    public static void empOperations(SessionFactory sessionFactory){
+    	Session session=sessionFactory.openSession();
+   	 	Transaction tx=session.beginTransaction();
+   	 	
+   	 	Employee emp1=new Employee("Tom");
+   	 	Employee emp2=new Employee("Clark", emp1);
+   	 	Employee emp3=new Employee("John");
+   	 	Employee emp4=new Employee("Adam", emp1);
+   	 	Employee emp5=new Employee("Ivan", emp3);
+   	 	
+   	 	session.persist(emp1);
+   	 	session.persist(emp2);
+   	 	session.persist(emp3);
+   	 	session.persist(emp4);
+   	 	session.persist(emp5);
+   	 	tx.commit();
+   	 	
+   	 	Query query=session.createQuery("FROM Employee WHERE manager IS NOT NULL");
+   	 	List<Employee> emps=query.list();
+   	 	
+   	 	for(Employee emp:emps)
+   	 		System.out.println(emp.getEmpId()+"\t"+emp.getEmpName()+"\t"+emp.getManager().getEmpName());
+   	 	
+   	 	session.close();
+ 	 	
+    }
+}

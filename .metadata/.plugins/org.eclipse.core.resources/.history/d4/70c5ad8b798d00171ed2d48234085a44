@@ -1,0 +1,9 @@
+package edu.hibernate.demo;
+
+public class Oracle10gDialectExtended extends Oracle10gDialect {
+
+    public Oracle10gDialectExtended() {
+        super();
+        registerColumnType(Types.DOUBLE, "float");
+    }
+}
